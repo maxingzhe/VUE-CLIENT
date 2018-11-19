@@ -8,6 +8,9 @@
 <script>
   import FootGuide from './components/FootGuide/FootGuide.vue'
   export default {
+    mounted(){
+      this.$store.dispatch('getAddress')
+    },
     components: {
       FootGuide
     }
