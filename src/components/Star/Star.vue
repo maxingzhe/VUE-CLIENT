@@ -10,7 +10,7 @@
       size:Number,
       score:Number
     },
-    computed:{
+    computed: {
       starClasses(){
         const {score} = this
         const scoreInteger = Math.floor(score)
@@ -18,10 +18,10 @@
         for (let i = 0; i < scoreInteger; i++) {
           scs.push('on')
         }
-        if(score*10-scoreInteger*10>=5){
+        if (score * 10 - scoreInteger * 10 >= 5) {
           scs.push('half')
         }
-        while (scs.length<5){
+        while (scs.length < 5) {
           scs.push('off')
         }
 
