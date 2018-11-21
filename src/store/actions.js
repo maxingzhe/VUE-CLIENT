@@ -83,7 +83,6 @@ export default {
     const result = await reqShopInfo()
     if(result.code===0) {
       const info = result.data
-      info.score = 3.5
       commit(RECEIVE_INFO, {info})
     }
   },
@@ -98,11 +97,12 @@ export default {
   },
 
 // 异步获取商家商品列表
-  async getShopGoods({commit}) {
+  async getShopGoods({commit},cb) {
     const result = await reqShopGoods()
     if(result.code===0) {
       const goods = result.data
       commit(RECEIVE_GOODS, {goods})
+      typeof cb ==='function' && cb()
     }
   },
   
