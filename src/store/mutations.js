@@ -9,9 +9,13 @@ import {
   RESET_USER,
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
-  RECEIVE_INFO
+  RECEIVE_INFO,
+  REDUCE_FOOD_COUNT,
+  ADD_FOOD_COUNT,
+  CLEAR_CART
 } from './mutation-types'
 
+import Vue from 'vue'
 export default {
   [RECEIVE_ADDRESS] (state, {address}) {
     state.address = address
@@ -39,5 +43,34 @@ export default {
   
   [RECEIVE_GOODS](state, {goods}) {
     state.goods = goods
+  },
+  
+  [ADD_FOOD_COUNT](state, {food}) {
+    if (food.count) {
+      food.count++
+    } else {// 第一次
+      // 新添加count属性, 并指定值为1
+      // food.count = 1  // 没有数据绑定==> 不会更新界面
+      Vue.set(food, 'count', 1)
+      // 添加到购物车中
+      state.cartFoods.push(food)
+    }
+  },
+  
+  [REDUCE_FOOD_COUNT](state, {food}) {
+    if (food.count) {
+      food.count--
+      // 一旦减为0时, 从购物车中删除food
+      if(food.count===0) {
+        state.cartFoods.splice(state.cartFoods.indexOf(food), 1)
+      }
+    }
+    
+  },
+  [CLEAR_CART](state) {
+    //先将所有food的count设置为0
+    state.cartFoods.forEach(food=>food.count = 0)
+    //再将购物车数组food清空
+    state.cartFoods = []
   }
 }

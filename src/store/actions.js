@@ -19,7 +19,10 @@ import {
   RESET_USER,
   RECEIVE_INFO,
   RECEIVE_RATINGS,
-  RECEIVE_GOODS
+  RECEIVE_GOODS,
+  REDUCE_FOOD_COUNT,
+  ADD_FOOD_COUNT,
+  CLEAR_CART
 } from './mutation-types'
 
 export default {
@@ -105,5 +108,16 @@ export default {
       typeof cb ==='function' && cb()
     }
   },
-  
+  // 更新指定food的数量的同步action
+  updateFoodCount ({commit}, {food, isAdd}) {
+    if(isAdd) {
+      commit(ADD_FOOD_COUNT, {food})
+    } else {
+      commit(REDUCE_FOOD_COUNT, {food})
+    }
+  },
+  //同步清空购物车
+  clearCart({commit}){
+    commit(CLEAR_CART)
+  }
 }
